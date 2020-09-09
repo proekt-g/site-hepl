@@ -1,0 +1,108 @@
+body {
+    font-family: $default-font;
+    font-display: swap;
+    color: $mainColor;
+    a {
+        color: $mainColor;
+    }
+}
+
+main {
+    min-height: $minHeightMain;
+}
+
+.container {
+    max-width: calc(#{$content-width} + 20px);
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+.date {
+    position: relative;
+
+    color: #000000;
+    &::after {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    &--time {
+        padding-left: 24px;
+        &::after {
+            content: url(../images/time.svg);
+        }
+    }
+    &--place {
+        padding-left: 21px;
+        &::after {
+            content: url(../images/location.svg);
+        }
+    }
+}
+.title-one {
+    font-size: 14px;
+    font-weight: 600;
+}
+.title-two {
+    font-size: 14px;
+    font-weight: 400;
+}
+.socials {
+    display: flex;
+    justify-content: space-between;
+    &__link {
+        width: 40px;
+        height: 40px;
+        border-radius: 25px;
+        background-color: var(--site-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+        transition: 0.3s;
+        &:last-child {
+            margin-right: 0;
+        }
+        &:hover {
+            background-color: #457df4;
+        }
+    }
+}
+.button {
+    height: 62px;
+    line-height: 62px;
+    display: inline-block;
+    border-radius: 60px;
+    background-color: var(--site-color);
+    position: relative;
+    padding: 0 75px 0 40px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 400;
+    transition: 0.3s;
+    &:hover {
+        .button__arrow {
+            width: calc(100% - 16px);
+        }
+    }
+    &__text {
+        position: relative;
+        z-index: 2;
+    }
+    &__arrow {
+        position: absolute;
+        width: 46px;
+        height: 46px;
+        border-radius: 60px;
+        background-color: #457df4;
+        right: 8px;
+        top: 8px;
+        transition: 0.3s;
+        z-index: 1;
+        &-svg {
+            position: absolute;
+            right: 17px;
+            top: 17px;
+        }
+    }
+}

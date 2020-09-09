@@ -1,0 +1,9 @@
+$default-font: "Montserrat", sans-serif;
+$content-width: 1170px;
+$heightHeader: 100px;
+$heightFooter: 570px;
+$minHeightMain: calc(100vh - (#{$heightHeader} + #{$heightFooter}));
+$mainColor: #222222;
+body {
+    --site-color: #3264ff;
+}
