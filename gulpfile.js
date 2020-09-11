@@ -31,11 +31,15 @@ gulp.task("scss", function () {
         .pipe(gulp.dest("src/assets/css"))
         .pipe(browserSync.reload({ stream: true }));
 });
-gulp.task("js", function () {
-    gulp.src(["node_modules/swiper/swiper-bundle.min.js"])
+gulp.task("js-libs", function () {
+    return gulp
+        .src(["node_modules/swiper/swiper-bundle.min.js"])
         .pipe(concat("_libs.js"))
         .pipe(gulp.dest("src/assets/js"));
-    gulp.src("src/assets/js/main.js")
+});
+gulp.task("js-optimization", function () {
+    return gulp
+        .src("src/assets/js/main.js")
         .pipe(
             babel({
                 presets: ["@babel/env"],
@@ -46,6 +50,8 @@ gulp.task("js", function () {
         .pipe(sourcemaps.write())
         .pipe(rename({ prefix: "_" }))
         .pipe(gulp.dest("src/assets/js"));
+});
+gulp.task("js", function () {
     return gulp
         .src(["src/assets/js/_libs.js", "src/assets/js/_main.js"])
         .pipe(concat("main.min.js"))
@@ -93,12 +99,21 @@ gulp.task("browser-sync", function () {
 // watch
 gulp.task("watch", function () {
     gulp.watch("src/assets/scss/**/*.scss", gulp.parallel("scss"));
-    gulp.watch("src/assets/js/main.js", gulp.parallel("js"));
+    gulp.watch("src/assets/js/main.js", gulp.parallel("js-optimization"));
+    gulp.watch("src/assets/js/_main.js", gulp.parallel("js"));
     gulp.watch("src/**/*.html", gulp.parallel("html"));
 });
 // /watch
 
 gulp.task(
     "default",
-    gulp.parallel("browser-sync", "html", "scss", "js", "watch")
+    gulp.parallel(
+        "browser-sync",
+        "html",
+        "scss",
+        "js-libs",
+        "js-optimization",
+        "js",
+        "watch"
+    )
 );

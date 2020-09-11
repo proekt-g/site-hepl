@@ -7,4 +7,189 @@
 @import "footer";
 .slider {
     background-color: #fafafa;
+    padding-top: 100px;
+    padding-bottom: 107px;
+    &__wrapper {
+        position: relative;
+    }
+    &__inner {
+        margin: 0 0 0 50px;
+        padding: 74px 0px;
+        @media (max-width: 1200px) {
+            margin: 0 0 0 20px;
+        }
+        @media (max-width: 500px) {
+            margin: 0;
+            padding: 74px 0px 40px;
+        }
+    }
+    &__slide {
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: 900px) {
+            flex-direction: column;
+            padding-bottom: 120px;
+            text-align: center;
+        }
+        @media (max-width: 500px) {
+            text-align: left;
+            padding-bottom: 95px;
+        }
+    }
+    &__info {
+        margin-left: 52px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        @media (max-width: 1200px) {
+            margin: 0 20px 0 30px;
+        }
+        @media (max-width: 900px) {
+            margin: 0;
+        }
+    }
+    &__title {
+        font-size: 60px;
+        font-weight: 500;
+        line-height: 72px;
+        max-width: 555px;
+        @media (max-width: 1200px) {
+            font-size: 50px;
+            line-height: 60px;
+        }
+        @media (max-width: 900px) {
+            max-width: 100%;
+            font-size: 45px;
+            line-height: 55px;
+        }
+        @media (max-width: 500px) {
+            font-size: 28px;
+            line-height: 36px;
+        }
+    }
+    &__text {
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24px;
+        margin: 20px 0 29px;
+        max-width: 500px;
+        @media (max-width: 900px) {
+            max-width: 100%;
+        }
+        @media (max-width: 500px) {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+    &__picture {
+        margin-right: 67px;
+        @media (max-width: 1200px) {
+            margin-right: 35px;
+        }
+        @media (max-width: 900px) {
+            margin: 0 auto;
+        }
+    }
+    &__pagination {
+        position: absolute;
+        bottom: 50% !important;
+        transform: translate(0, 50%);
+        left: 0;
+        width: auto !important;
+        display: flex;
+        flex-direction: column;
+        height: 80px;
+        justify-content: space-between;
+        align-items: center;
+        @media (max-width: 500px) {
+            bottom: 43% !important;
+        }
+    }
+    &__button {
+        width: 320px;
+        @media (max-width: 900px) {
+            position: absolute;
+            bottom: 0;
+        }
+        @media (max-width: 768px) {
+            left: 50%;
+            transform: translate(-50%, 0px);
+        }
+    }
+}
+.proffit {
+    position: relative;
+    padding: 40px 0;
+    top: -110px;
+    &__bg {
+        position: absolute;
+        height: 100%;
+        pointer-events: none;
+        background-color: #e2e9f1;
+        width: calc(100vw - ((100vw - 1170px) / 2) - 10px);
+        top: 0;
+        right: 0;
+        border-radius: 9px 0 0 9px;
+        z-index: 1;
+        @media (max-width: 1200px) {
+            width: calc(100% - 10px);
+        }
+    }
+    &__inner {
+        margin-left: 54px;
+        @media (max-width: 500px) {
+            margin-left: 0;
+        }
+    }
+    &__title {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        margin: 24px 0 6px;
+        @media (max-width: 500px) {
+            margin: 29px 0 6px;
+        }
+    }
+    &__text {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        max-width: 219px;
+        @media (max-width: 500px) {
+            margin: 0 auto;
+        }
+    }
+    &__slide {
+        width: auto;
+        @media (max-width: 500px) {
+            text-align: center;
+        }
+    }
+    &__navigation {
+        display: none;
+        @media (max-width: 900px) {
+            z-index: 10;
+            position: absolute;
+            bottom: 0;
+            width: calc(100vw - 20px);
+            display: flex;
+            align-items: center;
+            bottom: -68px;
+            justify-content: space-between;
+        }
+    }
+    &__pagination {
+        margin-left: 21px;
+        .swiper-pagination-bullet {
+            margin-left: 17px;
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+    &__arrows {
+        display: flex;
+        margin-right: 21px;
+    }
 }

@@ -4,6 +4,6 @@ $heightHeader: 100px;
 $heightFooter: 570px;
 $minHeightMain: calc(100vh - (#{$heightHeader} + #{$heightFooter}));
 $mainColor: #222222;
-body {
+:root {
     --site-color: #3264ff;
 }
