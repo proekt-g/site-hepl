@@ -33,7 +33,10 @@ gulp.task("scss", function () {
 });
 gulp.task("js-libs", function () {
     return gulp
-        .src(["node_modules/swiper/swiper-bundle.min.js"])
+        .src([
+            "node_modules/swiper/swiper-bundle.min.js",
+            "node_modules/imask/dist/imask.min.js",
+        ])
         .pipe(concat("_libs.js"))
         .pipe(gulp.dest("src/assets/js"));
 });

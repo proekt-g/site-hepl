@@ -121,6 +121,17 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+    svg path {
+        transition: 0.3s;
+    }
+    &:hover {
+        background-color: var(--site-color);
+        svg path {
+            fill: #ffffff;
+        }
+    }
 }
 .arrow-next {
     transform: rotate(180deg);
@@ -128,13 +139,112 @@ main {
 }
 .swiper-button-disabled {
     opacity: 0.6;
+    cursor: auto;
+
+    &:hover {
+        background-color: #e2e9f1;
+        svg path {
+            fill: #3264ff;
+        }
+    }
 }
 .swiper-pagination-bullet {
     width: 6px;
     height: 6px;
     border: 2px solid transparent;
+    margin: 9px 9px;
+    opacity: 1;
+    background-color: #cccccc;
     &-active {
         width: 8px;
         height: 8px;
+        background-color: var(--site-color);
+    }
+}
+.head-box {
+    margin-left: 100px;
+    @media (max-width: 768px) {
+        margin-left: 0;
+    }
+    &__title {
+        font-size: 28px;
+        font-weight: 500;
+        @media (max-width: 500px) {
+            font-size: 20px;
+            line-height: 32px;
+        }
+    }
+    &__important {
+        color: var(--site-color);
+    }
+    &__text {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        margin: 13px 0 0 1px;
+        @media (max-width: 500px) {
+            font-size: 14px;
+            line-height: 20px;
+            margin: 4px 0 0 1px;
+        }
+    }
+}
+.check-item {
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 24px;
+    position: relative;
+    margin-top: 13px;
+    @media (max-width: 500px) {
+        font-size: 14px;
+    }
+    &:first-child {
+        margin-top: 0;
+    }
+    &::after {
+        content: url(../images/check.svg);
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+.input-number {
+    height: 62px;
+    line-height: 62px;
+    display: block;
+    border-radius: 60px;
+    border: 1px solid #cccccc;
+    padding: 0 0 0 40px;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: transparent;
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
+    &::placeholder {
+        font-size: 18px;
+        font-weight: 400;
+        color: $mainColor;
+        @media (max-width: 500px) {
+            font-size: 16px;
+        }
+    }
+}
+.main-button {
+    display: inline-block;
+    line-height: 62px;
+    height: 62px;
+    border-radius: 60px;
+    background-color: var(--site-color);
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 0 40px;
+    transition: 0.3s;
+    @media (max-width: 500px) {
+        font-size: 16px;
+    }
+    &:hover {
+        background-color: #457df4;
     }
 }
