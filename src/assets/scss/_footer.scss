@@ -10,6 +10,9 @@
         @media (max-width: 1380px) {
             max-width: 100%;
         }
+        @media (max-width: 500px) {
+            height: 320px;
+        }
     }
     &__info {
         margin-left: 55px;
@@ -24,16 +27,25 @@
             margin-left: 0;
             padding: 20px 10px 0;
         }
+        @media (max-width: 500px) {
+            padding: 31px 10px 0;
+        }
     }
     &__title {
         font-size: 28px;
         font-weight: 500;
+        @media (max-width: 500px) {
+            font-size: 24px;
+        }
     }
     &__subtitle {
         color: var(--site-color);
         font-size: 28px;
         font-weight: 500;
         margin-top: 8px;
+        @media (max-width: 500px) {
+            font-size: 24px;
+        }
     }
     &__welcome {
         display: flex;
@@ -43,9 +55,12 @@
             margin: 24px 0 34px;
         }
         @media (max-width: 1380px) {
-            display: block;
             margin: 34px 0 64px;
             display: flex;
+        }
+        @media (max-width: 500px) {
+            display: block;
+            margin: 34px 0 45px;
         }
     }
     &__place-sub,
@@ -65,6 +80,10 @@
             margin-top: 0px;
             margin-left: 39px;
         }
+        @media (max-width: 500px) {
+            margin-top: 24px;
+            margin-left: 0;
+        }
     }
     &__contact {
         display: flex;
@@ -76,6 +95,10 @@
         @media (max-width: 1380px) {
             margin: 35px 0 42px;
             display: flex;
+        }
+        @media (max-width: 500px) {
+            margin: 25px 0 32px;
+            display: block;
         }
     }
     &__phone {
@@ -107,6 +130,10 @@
             margin-top: 0px;
             margin-left: 39px;
         }
+        @media (max-width: 500px) {
+            margin-top: 24px;
+            margin-left: 0;
+        }
         &::after {
             content: url(../images/mail.svg);
             position: absolute;
@@ -122,6 +149,17 @@
         @media (max-width: 1380px) {
             display: flex;
         }
+        @media (max-width: 500px) {
+            display: block;
+        }
+    }
+    &__main-button {
+        @media (max-width: 500px) {
+            font-size: 14px;
+            padding: 0 30px;
+            line-height: 40px;
+            height: 40px;
+        }
     }
     &__socials {
         margin-left: 30px;
@@ -134,6 +172,11 @@
             margin-left: 30px;
             margin-top: 0px;
             max-width: auto;
+        }
+        @media (max-width: 500px) {
+            margin-left: 0;
+            margin-top: 20px;
+            max-width: 180px;
         }
     }
     &__cop {
@@ -151,6 +194,9 @@
         }
         @media (max-width: 768px) {
             max-width: calc(100% - 10px);
+        }
+        @media (max-width: 500px) {
+            margin-top: 39px;
         }
     }
 }

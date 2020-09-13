@@ -72,6 +72,7 @@ gulp.task("clear", async function () {
 });
 gulp.task("export", async function () {
     gulp.src(["src/**/*.html", "!src/**/_*.html"]).pipe(gulp.dest("dist"));
+    gulp.src(["src/**/*.php", "!src/**/_*.php"]).pipe(gulp.dest("dist"));
     gulp.src("src/assets/css/**/*.css").pipe(gulp.dest("dist/assets/css"));
     gulp.src("src/assets/js/main.min.js")
         .pipe(
@@ -81,7 +82,7 @@ gulp.task("export", async function () {
         )
         .pipe(uglify())
         .pipe(gulp.dest("dist/assets/js"));
-    gulp.src(["src/assets/images/**/*.*", "!src/assets/images/original/**/*.*"])
+    gulp.src(["src/assets/images/**/*.*", "!src/assets/images/origin/**/*.*"])
         .pipe(imagemin([imagemin.svgo()]))
         .pipe(gulp.dest("dist/assets/images"));
     gulp.src("src/assets/fonts/**/*.*").pipe(gulp.dest("dist/assets/fonts"));
