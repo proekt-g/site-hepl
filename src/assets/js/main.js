@@ -1,12 +1,7 @@
 document.onreadystatechange = function () {
     if (document.readyState === "interactive") {
         if (document.body.clientWidth <= 1200) {
-            document
-                .querySelector(".welcome__inner")
-                .insertAdjacentElement(
-                    "afterbegin",
-                    document.querySelector(".welcome__title")
-                );
+            document.querySelector(".welcome__inner").insertAdjacentElement("afterbegin", document.querySelector(".welcome__title"));
         }
     }
 };
@@ -87,6 +82,10 @@ window.addEventListener("load", function () {
         $problemConectTitle = document.querySelector(".problem__conect-title"),
         $costBox = document.querySelectorAll(".cost__box"),
         $footerMainButton = document.querySelector(".footer__main-button");
+
+    // iPhone MODEL
+    // let iPhoneModel = []
+    // /iPhone MODEL
     // /variables
     // ----------------------------------------------
 
@@ -94,32 +93,20 @@ window.addEventListener("load", function () {
     function ajaxRequest(request, url) {
         event.preventDefault();
         if (event.target.querySelector(".input--number").value.length === 17) {
-            let params =
-                "number=" + event.target.querySelector(".input--number").value;
-            if (event.target.querySelector(".input--name") !== null)
-                params +=
-                    "&name=" + event.target.querySelector(".input--name").value;
+            let params = "number=" + event.target.querySelector(".input--number").value;
+            if (event.target.querySelector(".input--name") !== null) params += "&name=" + event.target.querySelector(".input--name").value;
             request.open("POST", url, true);
-            request.setRequestHeader(
-                "Content-type",
-                "application/x-www-form-urlencoded"
-            );
+            request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.addEventListener("readystatechange", ajaxReadyStateChange);
             request.send(params);
         } else {
-            event.target
-                .querySelector(".input--number")
-                .classList.add("input--err");
+            event.target.querySelector(".input--number").classList.add("input--err");
         }
     }
     function callModal(step) {
         document.querySelector("body").classList.toggle("block");
-        document
-            .querySelector(`.modal-overlay--${step}`)
-            .classList.toggle(`modal-overlay--active`);
-        document
-            .querySelector(`.modal--${step}`)
-            .classList.toggle("modal--active");
+        document.querySelector(`.modal-overlay--${step}`).classList.toggle(`modal-overlay--active`);
+        document.querySelector(`.modal--${step}`).classList.toggle("modal--active");
     }
     function callModalThank() {
         callModal("thank");
@@ -130,13 +117,19 @@ window.addEventListener("load", function () {
     function focusInput() {
         this.classList.remove("input--err");
     }
+    function resizeWindow() {
+        // let widthWindow =
+        //     window.innerWidth > 0 ? window.innerWidth : screen.width;
+        // $calculatorBg = ;
+        document.querySelector(".calculator__bg").style.height = document.querySelector(".calculator__step--active").clientHeight + "px";
+        document.querySelector(".calculator__bg").style.top = document.querySelector(".calculator__step--active").getBoundingClientRect().top + "px";
+    }
     //  /universal function
     // ----------------------------------------------
 
     // event
     document.querySelector("body").addEventListener(
         "submit",
-        // ajaxRequest.bind(event.target, request, url),
         function () {
             ajaxRequest(request, url);
         },
@@ -145,11 +138,34 @@ window.addEventListener("load", function () {
     document.querySelector(
         "body",
         addEventListener("click", function () {
-            let arrClassName = event.target.classList;
+            let arrClassName = event.target.classList,
+                $calculatorStepBlockBox = event.target.closest(".calculator__step-block-box");
             if (arrClassName.contains("modal-overlay--thank")) callModalThank();
             if (arrClassName.contains("modal-overlay--form")) callModalForm();
+            if (event.target.closest(".button--calculator")) callCalculator();
+            if (event.target.closest(".calculator__back")) closeCalculator();
+            if ($calculatorStepBlockBox) {
+                if ($calculatorStepBlockBox.closest(".calculator__step-block").querySelector(".calculator__step-block-box--active") !== null)
+                    $calculatorStepBlockBox
+                        .closest(".calculator__step-block")
+                        .querySelector(".calculator__step-block-box--active")
+                        .classList.remove("calculator__step-block-box--active");
+                $calculatorStepBlockBox.classList.toggle("calculator__step-block-box--active");
+            }
+            if (event.target.closest(".header__burger")) {
+                event.target.closest(".header__burger").classList.toggle("header__burger--open");
+                document.querySelector(".menu").classList.toggle("menu--open");
+                document.querySelector("body").classList.add("block");
+            }
+            if (event.target.closest(".header__btn")) callModalForm();
+            if (event.target.closest(".menu__button")) {
+                document.querySelector(".header__burger").classList.toggle("header__burger--open");
+                document.querySelector(".menu").classList.toggle("menu--open");
+            }
         })
     );
+
+    window.addEventListener("resize", resizeWindow, false);
 
     $modalClose.forEach(function (item, index) {
         if (index) item.addEventListener("click", callModalThank, false);
@@ -170,21 +186,21 @@ window.addEventListener("load", function () {
     function ajaxReadyStateChange() {
         if (request.readyState === 4 && request.status === 200) {
             if (request.responseText) {
-                if (
-                    document.querySelector(
-                        ".modal-overlay--form.modal-overlay--active"
-                    ) !== null
-                )
-                    callModalForm();
+                if (document.querySelector(".modal-overlay--form.modal-overlay--active") !== null) callModalForm();
                 callModalThank();
-                request.removeEventListener(
-                    "readystatechange",
-                    ajaxReadyStateChange
-                );
+                request.removeEventListener("readystatechange", ajaxReadyStateChange);
             } else {
                 console.log("Ошибка при отправке формы!");
             }
         }
+    }
+    function callCalculator() {
+        document.querySelector(".calculator").classList.toggle("calculator--active");
+        document.querySelector("body").classList.add("block");
+    }
+    function closeCalculator() {
+        document.querySelector(".calculator").classList.toggle("calculator--active");
+        document.querySelector("body").classList.remove("block");
     }
     // /unique function
     // ----------------------------------------------
@@ -195,7 +211,7 @@ window.addEventListener("load", function () {
             mask: "+{38}(000)000-00-00",
         });
     });
-
+    resizeWindow();
     // callModal();
     setTimeout(function () {
         document.querySelector(".footer__map").insertAdjacentHTML(
