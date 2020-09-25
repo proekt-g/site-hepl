@@ -6,6 +6,10 @@
 //Переменная $name,$phone, $mail получает данные при помощи метода POST из формы
 $number = $_POST['number'];
 $name = $_POST['name'];
+$device = $_POST['device'];
+$model = $_POST['model'];
+$character = $_POST['character'];
+$type = $_POST['type'];
  
 //в переменную $token нужно вставить токен, который нам прислал @botFather
 $token = "825031954:AAEFGlsZUGF_1MU97Le05zvwS6Fb-hr7YSg";
@@ -16,7 +20,12 @@ $chat_id = "-349993394";
 //Далее создаем переменную, в которую помещаем PHP массив
 $arr = array(
   'Телефон: +' => $number,
-  'Имя: ' => $name
+  'Имя: ' => $name,
+  'Устройство: ' => $device,
+  'Модель: ' => $model,
+  'Характер неисправности: ' => $character,
+  'Тип услуги: ' => $type,
+
 );
  
 //При помощи цикла перебираем массив и помещаем переменную $txt текст из массива $arr

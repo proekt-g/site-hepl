@@ -11,7 +11,9 @@ let gulp = require("gulp"),
     babel = require("gulp-babel"),
     sourcemaps = require("gulp-sourcemaps"),
     imagemin = require("gulp-imagemin"),
-    concat = require("gulp-concat");
+    concat = require("gulp-concat"),
+    htmlmin = require("gulp-htmlmin");
+
 // /vars
 
 // live mode
@@ -33,10 +35,7 @@ gulp.task("scss", function () {
 });
 gulp.task("js-libs", function () {
     return gulp
-        .src([
-            "node_modules/swiper/swiper-bundle.min.js",
-            "node_modules/imask/dist/imask.min.js",
-        ])
+        .src(["node_modules/swiper/swiper-bundle.min.js", "node_modules/imask/dist/imask.min.js"])
         .pipe(concat("_libs.js"))
         .pipe(gulp.dest("src/assets/js"));
 });
@@ -62,7 +61,10 @@ gulp.task("js", function () {
         .pipe(browserSync.reload({ stream: true }));
 });
 gulp.task("html", function () {
-    return gulp.src("src/**/*.html").pipe(browserSync.reload({ stream: true }));
+    return gulp
+        .src("src/**/*.html")
+        .pipe(htmlmin({ collapseWhitespace: true, removeComments: true }))
+        .pipe(browserSync.reload({ stream: true }));
 });
 // /live mode
 
@@ -109,15 +111,4 @@ gulp.task("watch", function () {
 });
 // /watch
 
-gulp.task(
-    "default",
-    gulp.parallel(
-        "browser-sync",
-        "html",
-        "scss",
-        "js-libs",
-        "js-optimization",
-        "js",
-        "watch"
-    )
-);
+gulp.task("default", gulp.parallel("browser-sync", "html", "scss", "js-libs", "js-optimization", "js", "watch"));
