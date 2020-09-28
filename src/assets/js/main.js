@@ -92,7 +92,7 @@ window.addEventListener("load", function () {
     heightIndexBg = parseInt(getComputedStyle($lastStep).marginBottom) + parseInt(getComputedStyle($lastStep).marginTop) + $lastStep.offsetHeight,
     startHeightStep = document.querySelector("#last-step").offsetHeight;
 
-  let exceptionsDeviceProblem, globalDevices, globalModel;
+  let exceptionsDeviceProblem, globalDevices, globalModel, topBgCalculator;
 
   let dataBasePhone = [
     {
@@ -2690,12 +2690,12 @@ window.addEventListener("load", function () {
   function focusInput() {
     this.classList.remove("input--err");
   }
-  function resizeWindow() {
-    // let widthWindow =
-    //     window.innerWidth > 0 ? window.innerWidth : screen.width;
-    // $calculatorBg = ;
-    initCalculatorStep();
-  }
+  // function resizeWindow() {
+  // let widthWindow =
+  //     window.innerWidth > 0 ? window.innerWidth : screen.width;
+  // $calculatorBg = ;
+  // initCalculatorStep();
+  // }
   function clickStepElement(element, node) {
     if (element.closest(".calculator__step-block").querySelector(`.calculator__step-block-${node}--active`) !== null)
       element
@@ -2715,45 +2715,45 @@ window.addEventListener("load", function () {
     },
     false
   );
-  document.querySelector(
-    "body",
-    addEventListener("click", function (event) {
-      let arrClassName = event.target.classList,
-        $calculatorStepBlockBox = event.target.closest(".calculator__step-block-box"),
-        $calculatorStepBlockTag = event.target.closest(".calculator__step-block-tag"),
-        $calculatorStepBlockParagraph = event.target.closest(".calculator__step-block-paragraph"),
-        $calculatorStepBlockCard = event.target.closest(".calculator__step-block-card");
-      if (arrClassName.contains("modal-overlay--thank")) callModalThank();
-      if (arrClassName.contains("modal-overlay--form")) callModalForm();
-      if (event.target.closest(".button--calculator")) callCalculator();
-      if (event.target.closest(".calculator__back")) closeCalculator();
-      if ($calculatorStepBlockTag) {
-        clickStepElement($calculatorStepBlockTag, "tag");
-      }
-      if ($calculatorStepBlockBox) {
-        clickStepElement($calculatorStepBlockBox, "box");
-      }
-      if ($calculatorStepBlockParagraph) {
-        clickStepElement($calculatorStepBlockParagraph, "paragraph");
-      }
-      if ($calculatorStepBlockCard) {
-        clickStepElement($calculatorStepBlockCard, "card");
-      }
-      if (event.target.closest(".header__burger")) {
-        event.target.closest(".header__burger").classList.toggle("header__burger--open");
-        document.querySelector(".menu").classList.toggle("menu--open");
-        // document.querySelector("body").classList.toggle("block");
-      }
-      if (event.target.closest(".header__btn")) callModalForm();
-      if (event.target.closest(".menu__button")) {
-        document.querySelector(".header__burger").classList.toggle("header__burger--open");
-        document.querySelector(".menu").classList.toggle("menu--open");
-      }
-      if (event.target.closest(".calculator__main-button")) {
-        let checkCheckbox = false;
-        let calculatorStep = event.target.closest(".calculator__step"),
-          skipStep = false;
-        calculatorStep.querySelectorAll("input").forEach((item) => {
+  document.querySelector("body").addEventListener("click", function (event) {
+    let arrClassName = event.target.classList,
+      $calculatorStepBlockBox = event.target.closest(".calculator__step-block-box"),
+      $calculatorStepBlockTag = event.target.closest(".calculator__step-block-tag"),
+      $calculatorStepBlockParagraph = event.target.closest(".calculator__step-block-paragraph"),
+      $calculatorStepBlockCard = event.target.closest(".calculator__step-block-card");
+    if (arrClassName.contains("modal-overlay--thank")) callModalThank();
+    if (arrClassName.contains("modal-overlay--form")) callModalForm();
+    if (event.target.closest(".button--calculator")) callCalculator();
+    if (event.target.closest(".calculator__back")) closeCalculator();
+    if ($calculatorStepBlockTag) {
+      clickStepElement($calculatorStepBlockTag, "tag");
+    }
+    if ($calculatorStepBlockBox) {
+      clickStepElement($calculatorStepBlockBox, "box");
+    }
+    if ($calculatorStepBlockParagraph) {
+      clickStepElement($calculatorStepBlockParagraph, "paragraph");
+    }
+    if ($calculatorStepBlockCard) {
+      clickStepElement($calculatorStepBlockCard, "card");
+    }
+    if (event.target.closest(".header__burger")) {
+      event.target.closest(".header__burger").classList.toggle("header__burger--open");
+      document.querySelector(".menu").classList.toggle("menu--open");
+    }
+    if (event.target.closest(".header__btn")) callModalForm();
+    if (event.target.closest(".menu__button")) {
+      document.querySelector(".header__burger").classList.toggle("header__burger--open");
+      document.querySelector(".menu").classList.toggle("menu--open");
+    }
+    if (event.target.closest(".calculator__main-button")) {
+      let checkCheckbox = false;
+      // let calculatorStep = event.target.closest(".calculator__step");
+      let skipStep = false;
+      event.target
+        .closest(".calculator__step")
+        .querySelectorAll("input")
+        .forEach((item) => {
           if (item.checked) {
             let labelText;
             event.target
@@ -2762,10 +2762,10 @@ window.addEventListener("load", function () {
               .forEach((label) => {
                 if (item.id === label.getAttribute("for")) {
                   if (event.target.id !== "last-step-choise") {
-                    calculatorStep.querySelector(".calculator__step-choise").innerHTML = label.textContent.trim();
+                    event.target.closest(".calculator__step").querySelector(".calculator__step-choise").innerHTML = label.textContent.trim();
                     labelText = label.textContent.trim();
                   } else {
-                    calculatorStep.querySelector(".calculator__step-choise").innerHTML = label
+                    event.target.closest(".calculator__step").querySelector(".calculator__step-choise").innerHTML = label
                       .querySelector(".calculator__step-block-card-name")
                       .textContent.trim();
                     labelText = label.querySelector(".calculator__step-block-card-name").textContent.trim();
@@ -2809,8 +2809,12 @@ window.addEventListener("load", function () {
                 });
               } else {
                 document.querySelector(".calculator__step-block--card").innerHTML = "";
-                let deviceArrBuff = calculatorStep.querySelector(".calculator__step-choise").textContent.split(" ");
-                let model = calculatorStep.querySelector(".calculator__step-choise").textContent.replace(deviceArrBuff[0], "").trim();
+                let deviceArrBuff = event.target.closest(".calculator__step").querySelector(".calculator__step-choise").textContent.split(" ");
+                let model = event.target
+                  .closest(".calculator__step")
+                  .querySelector(".calculator__step-choise")
+                  .textContent.replace(deviceArrBuff[0], "")
+                  .trim();
                 let cloneBase, cloneBaseInfo;
                 switch (deviceArrBuff[0]) {
                   case "iPad":
@@ -2869,73 +2873,80 @@ window.addEventListener("load", function () {
               }, 600);
             }
 
-            calculatorStep.style.height = "";
-            calculatorStep.classList.toggle("calculator__step--check");
-            calculatorStep.classList.toggle("calculator__step--active");
+            event.target.closest(".calculator__step").style.height = "";
+            event.target.closest(".calculator__step").classList.toggle("calculator__step--check");
+            event.target.closest(".calculator__step").classList.toggle("calculator__step--active");
 
             if (skipStep) {
-              calculatorStep.nextElementSibling.classList.toggle("calculator__step--block");
-              calculatorStep.nextElementSibling.nextElementSibling.classList.toggle("calculator__step--active");
+              event.target.closest(".calculator__step").nextElementSibling.classList.toggle("calculator__step--block");
+              event.target.closest(".calculator__step").nextElementSibling.nextElementSibling.classList.toggle("calculator__step--active");
               initCalculatorStep();
             } else {
-              calculatorStep.nextElementSibling.classList.toggle("calculator__step--active");
+              event.target.closest(".calculator__step").nextElementSibling.classList.toggle("calculator__step--active");
               initCalculatorStep();
             }
             checkCheckbox = true;
           }
         });
-        if (!checkCheckbox) {
-          stepCalculatorErr(calculatorStep.querySelectorAll(".calculator__step-block-box"), "box");
-          stepCalculatorErr(calculatorStep.querySelectorAll(".calculator__step-block-tag"), "tag");
-          stepCalculatorErr(calculatorStep.querySelectorAll(".calculator__step-block-paragraph"), "paragraph");
-          stepCalculatorErr(calculatorStep.querySelectorAll(".calculator__step-block-card"), "card");
-        }
+      if (!checkCheckbox) {
+        stepCalculatorErr(event.target.closest(".calculator__step").querySelectorAll(".calculator__step-block-box"), "box");
+        stepCalculatorErr(event.target.closest(".calculator__step").querySelectorAll(".calculator__step-block-tag"), "tag");
+        stepCalculatorErr(event.target.closest(".calculator__step").querySelectorAll(".calculator__step-block-paragraph"), "paragraph");
+        stepCalculatorErr(event.target.closest(".calculator__step").querySelectorAll(".calculator__step-block-card"), "card");
       }
-      if (event.target.closest(".calculator__step-information-bottom-main-button"))
-        event.target
-          .closest(".calculator__step-information-bottom-main-button")
-          .classList.add("calculator__step-information-bottom-main-button--active");
-      if (event.target.closest(".calculator__step-finish-button")) closeCalculator();
-      if (event.target.closest(".calculator__step-edit")) {
-        document.getElementById("finish-title").textContent = document.getElementById("finish-title").dataset.good;
-        if (document.querySelector(".calculator__step--active").classList.contains("calculator__step--last"))
-          document.querySelector(".calculator__step--active").style.height = "0px";
-        else document.querySelector(".calculator__step--active").style.height = startHeightStep + "px";
-        document.querySelector(".calculator__step--active").classList.remove("calculator__step--active");
-        checkNextStepCalculator(event.target.closest(".calculator__step").nextElementSibling);
-        event.target.closest(".calculator__step").classList.remove("calculator__step--check");
-        event.target.closest(".calculator__step").classList.add("calculator__step--active");
-        initCalculatorStep();
-        document.querySelector(".calculator__bg").style.top =
-          document.querySelector(".calculator__step--active").getBoundingClientRect().top +
-          document.querySelector(".calculator--active").scrollTop +
-          "px";
-      }
-      if (event.target.closest(".calculator__step-block-btn")) {
-        document.getElementById("finish-title").textContent = document.getElementById("finish-title").dataset.oops;
+    }
+    if (event.target.closest(".calculator__step-information-bottom-main-button"))
+      event.target
+        .closest(".calculator__step-information-bottom-main-button")
+        .classList.add("calculator__step-information-bottom-main-button--active");
+    if (event.target.closest(".calculator__step-finish-button")) closeCalculator();
+    if (event.target.closest(".calculator__step-edit")) {
+      document.getElementById("finish-title").textContent = document.getElementById("finish-title").dataset.good;
+      if (document.querySelector(".calculator__step--active").classList.contains("calculator__step--last"))
+        document.querySelector(".calculator__step--active").style.height = "0px";
+      else document.querySelector(".calculator__step--active").style.height = startHeightStep + "px";
+      document.querySelector(".calculator__step--active").classList.remove("calculator__step--active");
+      checkNextStepCalculator(event.target.closest(".calculator__step").nextElementSibling);
+      event.target.closest(".calculator__step").classList.remove("calculator__step--check");
+      event.target.closest(".calculator__step").classList.add("calculator__step--active");
+      initCalculatorStep();
+      document.querySelector(".calculator__bg").style.top =
+        document.querySelector(".calculator__step--active").getBoundingClientRect().top +
+        document.querySelector(".calculator--active").scrollTop +
+        "px";
+      topBgCalculator =
+        document.querySelector(".calculator__step--active").getBoundingClientRect().top +
+        document.querySelector(".calculator--active").scrollTop +
+        "px";
+    }
+    if (event.target.closest(".calculator__step-block-btn")) {
+      document.getElementById("finish-title").textContent = document.getElementById("finish-title").dataset.oops;
 
-        calculatorStep = event.target.closest(".calculator__step");
+      // event.target.closest(".calculator__step") = event.target.closest(".calculator__step");
 
-        calculatorStep.querySelector(".calculator__step-choise").innerHTML = "";
-        calculatorStep.style.height = "";
-        calculatorStep.classList.toggle("calculator__step--check");
-        calculatorStep.classList.toggle("calculator__step--active");
+      event.target.closest(".calculator__step").querySelector(".calculator__step-choise").innerHTML = "";
+      event.target.closest(".calculator__step").style.height = "";
+      event.target.closest(".calculator__step").classList.toggle("calculator__step--check");
+      event.target.closest(".calculator__step").classList.toggle("calculator__step--active");
 
-        calculatorStep.querySelectorAll("input").forEach((item) => {
+      event.target
+        .closest(".calculator__step")
+        .querySelectorAll("input")
+        .forEach((item) => {
           item.checked = false;
         });
 
-        // if (skipStep) {
-        calculatorStep.nextElementSibling.classList.toggle("calculator__step--block");
-        calculatorStep.nextElementSibling.nextElementSibling.classList.toggle("calculator__step--active");
-        initCalculatorStep();
-        // } else {
-        // calculatorStep.nextElementSibling.classList.toggle("calculator__step--active");
-        // initCalculatorStep();
-        // }
-      }
-    })
-  );
+      // if (skipStep) {
+      event.target.closest(".calculator__step").nextElementSibling.classList.toggle("calculator__step--block");
+      event.target.closest(".calculator__step").nextElementSibling.nextElementSibling.classList.toggle("calculator__step--active");
+      initCalculatorStep();
+      // } else {
+      // event.target.closest(".calculator__step").nextElementSibling.classList.toggle("calculator__step--active");
+      // initCalculatorStep();
+      // }
+    }
+  });
+
   function stepCalculatorErr(listItem, node) {
     listItem.forEach((item) => {
       item.classList.add(`calculator__step-block-${node}--err`);
@@ -2946,7 +2957,7 @@ window.addEventListener("load", function () {
       });
     }, 800);
   }
-  window.addEventListener("resize", resizeWindow, false);
+  // window.addEventListener("resize", resizeWindow, false);
 
   $modalClose.forEach(function (item, index) {
     if (index) item.addEventListener("click", callModalThank, false);
@@ -3060,15 +3071,24 @@ window.addEventListener("load", function () {
     if (document.querySelector(".calculator__step--active").previousElementSibling) {
       document.querySelector(".calculator__bg").style.top =
         Number(document.querySelector(".calculator__bg").style.top.replace("px", "")) + heightIndexBg + "px";
+      topBgCalculator = Number(document.querySelector(".calculator__bg").style.top.replace("px", "")) + heightIndexBg + "px";
     } else {
       document.querySelector(".calculator__bg").style.top = document.querySelector(".calculator__step--active").getBoundingClientRect().top + "px";
+      topBgCalculator = document.querySelector(".calculator__step--active").getBoundingClientRect().top + "px";
     }
   }
   function callCalculator() {
+    let documentWidth = parseInt(document.documentElement.clientWidth);
+    let windowsWidth = parseInt(window.innerWidth);
+    let scrollbarWidth = windowsWidth - documentWidth;
+    document.querySelector("body").style.paddingRight = scrollbarWidth + "px";
+    document.querySelector(".header").style.paddingRight = scrollbarWidth + "px";
     document.querySelector(".calculator").classList.toggle("calculator--active");
     document.querySelector("body").classList.add("block");
   }
   function closeCalculator() {
+    document.querySelector("body").style.paddingRight = "";
+    document.querySelector(".header").style.paddingRight = "";
     document.querySelector(".calculator").classList.toggle("calculator--active");
     document.querySelector("body").classList.remove("block");
   }
@@ -3081,8 +3101,9 @@ window.addEventListener("load", function () {
       mask: "+{38}(000)000-00-00",
     });
   });
-  resizeWindow();
-  // callModal();
+
+  initCalculatorStep();
+
   setTimeout(function () {
     document.querySelector(".footer__map").insertAdjacentHTML(
       "afterbegin",
