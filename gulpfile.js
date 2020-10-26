@@ -83,7 +83,7 @@ gulp.task("export", async function () {
     //         presets: ["@babel/env"],
     //     })
     // )
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest("dist/assets/js"));
   gulp
     .src(["src/assets/images/**/*.*", "!src/assets/images/origin/**/*.*"])
